@@ -8,10 +8,14 @@ import "reset-css"
 import "@/assets/styles/global.scss"
 
 //style of components
-import App from "./App";
+//substitute App with Router
+import {BrowserRouter} from "react-router-dom";
+import App from "@/App.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App/>
+    <BrowserRouter>
+        <App/>
+    </BrowserRouter>
   </React.StrictMode>,
 )
