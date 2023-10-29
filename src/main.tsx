@@ -14,7 +14,7 @@ import App from "@/App.tsx";
 
 //state manage
 import {Provider} from "react-redux";
-import store from "@/reducer";
+import store from "@/store";
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

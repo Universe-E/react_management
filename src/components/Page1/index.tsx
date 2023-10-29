@@ -2,9 +2,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {Button, Input} from "antd";
 import {ChangeEvent, useState} from "react";
 
-
 const View = () => {
-    const {num} = useSelector((state) => ({
+    const {num} = useSelector((state:RootState) => ({
         num:state.num
     }))
     //get value from input
@@ -15,7 +14,7 @@ const View = () => {
     const dispatch = useDispatch()
     // add value, if input value not assigned, add 1
     const changeNum = ()=>{
-        if (val) dispatch({type: "addVal", value:val*1})
+        if (val) dispatch({type: "addVal", value:parseInt(val)})
         else dispatch({type:"add",value:1})
     }
     return (

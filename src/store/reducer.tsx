@@ -13,7 +13,6 @@ let reducer = (state = defaultState,action:{type:string,value:number}) => {
             break
         default:
             break
-
     }
 
     return newState
