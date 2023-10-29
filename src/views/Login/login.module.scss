@@ -26,14 +26,14 @@
         width: 100px;
         height: 2px;
         position: absolute;
-        background: linear-gradient(to right,rgba(255,255,255,0),#1976D2);
-        left: -30px;
-        top:18px;
+        background: linear-gradient(to right,rgba(255,255,255,0), #0081e5);
+        left: -50px;
+        top:12px;
       }
       &:after{
         left: auto;
-        background: linear-gradient(to left,rgba(255,255,255,0),#1976D2);
-        right: -30px;
+        background: linear-gradient(to left,rgba(255,255,255,0), #0081e5);
+        right: -50px;
       }
     }
   }

@@ -12,8 +12,15 @@ import "@/assets/styles/global.scss"
 import {BrowserRouter} from "react-router-dom";
 import App from "@/App.tsx";
 
+//state manage
+import {Provider} from "react-redux";
+import store from "@/reducer";
+
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <BrowserRouter>
-        <App/>
-    </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
+    </Provider>
 )
