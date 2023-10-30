@@ -4,20 +4,9 @@ import handleNum from "./index"
 let reducer = (state = {...handleNum.state},action:ActionType) => {
     //deep copy
     let newState = JSON.parse(JSON.stringify(state))
-    switch (action.type) {
-        case "add":
-            handleNum.actions.add(newState)
-            break
-        case "addVal":
-            handleNum.actions.addVal(newState,action)
-            break
-        case "pushNum":
-            handleNum.actions.pushNum(newState,action)
-            break
-        default:
-            break
-    }
-
+    //get action type from actions, then handle directly
+    const handle = handleNum.actions[action.type]
+    if (handle) handle(newState,action)
     return newState
 }
 export default reducer

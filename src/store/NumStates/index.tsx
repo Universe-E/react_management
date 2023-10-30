@@ -4,13 +4,13 @@ export default {
         arr:[10,20,30]
     },
     actions:{
-        add(newState:RootState){
+        addOne:function(newState:RootState){
             newState.num++
         },
-        addVal(newState:RootState,action:ActionType){
+        addVal:function(newState:RootState,action:ActionType){
             newState.num += action.value
         },
-        pushNum(newState:RootState,action:ActionType){
+        pushNum:function(newState:RootState,action:ActionType){
             newState.arr.push(action.value)
         }
     }
