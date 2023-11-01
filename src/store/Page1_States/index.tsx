@@ -1,17 +1,24 @@
 export default {
     state:{
         num:20,
-        arr:[10,20,30]
+        arr:[
+            {id:0,val:10},
+            {id:1,val:20},
+            {id:2,val:30}
+        ]
     },
     actions:{
         addOne:function(newState:RootState){
-            newState.num++
+            setTimeout(()=>{
+                newState.num++
+            },500)
         },
         addVal:function(newState:RootState,action:ActionType){
             newState.num += action.value
         },
         pushNum:function(newState:RootState,action:ActionType){
-            newState.arr.push(action.value)
+            const lastId = newState.arr[newState.arr.length-1].id
+            newState.arr.push({id:lastId+1,val:action.value})
         }
     }
 }

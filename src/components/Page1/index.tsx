@@ -5,7 +5,8 @@ import styles from "./page1.module.scss"
 
 const View = () => {
     const {num,arr} = useSelector((state:RootState) => ({
-        ...state
+        num:state.handlePage1.num,
+        arr:state.handlePage1.arr
     }))
 
     //get value from input
@@ -47,8 +48,8 @@ const View = () => {
                 </Space>
                 <p className={styles.p}>
                     {
-                        arr.map((i:number)=>{
-                            return <li style={{fontSize:"large"}}>{i}</li>
+                        arr.map((e:any)=>{
+                            return <li key={e.id} style={{fontSize:"large"}}>{e.val}</li>
                         })
                     }
                 </p>
