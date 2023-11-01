@@ -12,9 +12,10 @@ const View: React.FC = () => {
     } = theme.useToken();
 
     return (
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout style={{ minHeight: '100vh', backgroundColor:"orange"}}>
             {/*left sider*/}
-            <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+            <Sider collapsible collapsed={collapsed}
+                   onCollapse={(value) => setCollapsed(value)}>
                 <div className="demo-logo-vertical" />
                 <MainMenu/>
             </Sider>

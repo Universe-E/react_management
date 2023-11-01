@@ -20,8 +20,8 @@ function getItem(
 }
 
 const items:MenuItem[] = [
-    getItem('Column 1', '/page1', <PieChartOutlined />),
-    getItem('Column 2', '/page2', <DesktopOutlined />),
+    getItem('Num Management', '/page1', <PieChartOutlined />),
+    getItem('Task List', '/page2', <DesktopOutlined />),
     getItem('Column 3', '/page3', <UserOutlined />, [
         getItem('Column 3-1', '/page3/1',<TeamOutlined/>,[
             getItem('Column 3-1-1', '/page3/1/1'),

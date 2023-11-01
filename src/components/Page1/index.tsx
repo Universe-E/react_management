@@ -5,7 +5,8 @@ import styles from "./page1.module.scss"
 
 const View = () => {
     const {num,arr} = useSelector((state:RootState) => ({
-        ...state
+        num:state.handlePage1.num,
+        arr:state.handlePage1.arr
     }))
 
     //get value from input
@@ -22,7 +23,10 @@ const View = () => {
         else dispatch({type:"addOne",value:1})
     }
     //push value to array if input value is assigned
-    const pushToArr = ()=> arrVal && dispatch({type:"pushNum",value:parseInt(arrVal)})
+    const pushToArr = ()=> {
+        if (!arrVal) return
+        dispatch({type:"pushNum",value:parseInt(arrVal)})
+    }
     return (
         <div className="page1">
             <Space direction="vertical" size="large" style={{display:"flex"}}>
@@ -47,8 +51,8 @@ const View = () => {
                 </Space>
                 <p className={styles.p}>
                     {
-                        arr.map((i:number)=>{
-                            return <li style={{fontSize:"large"}}>{i}</li>
+                        arr.map((e:any)=>{
+                            return <li key={e.id} style={{fontSize:"large"}}>{e.val}</li>
                         })
                     }
                 </p>
