@@ -9,7 +9,9 @@ export default {
     },
     actions:{
         addOne:function(newState:RootState){
-            newState.num++
+            setTimeout(()=>{
+                newState.num++
+            },500)
         },
         addVal:function(newState:RootState,action:ActionType){
             newState.num += action.value
