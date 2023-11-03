@@ -1,9 +1,8 @@
-import {ChangeEvent, useEffect, useState} from "react";
-import {Button, Input, Space} from "antd";
+import {useEffect} from "react";
+import {Button, Input, Checkbox, Form} from "antd";
 import initLoginBg from "./init.ts";
 import styles from "./login.module.scss"
 import "./login.less"
-import {captchaAPI} from "@/request/api";
 
 const View = () => {
     //init background after component mounted
@@ -11,35 +10,25 @@ const View = () => {
         initLoginBg()
         window.onresize = function () {initLoginBg()}
     },[])
-    // values input from user
-    const [usernameVal,setUsernameVal] = useState("");
-    const [passwordVal,setPasswordVal] = useState("");
-    const [captchaVal,setCaptchaVal] = useState("");
-    // store captcha images
-    const [captchaImg,setCaptchaImg] = useState("");
+    const onFinish = (values: any) => {
+        console.log('Success:', values);
+    };
 
-    const userNameChange = (e:ChangeEvent<HTMLInputElement>)=>{
-        setUsernameVal(e.target.value);
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+    //custom validate method
+    const validate = (rule,value,callback)=>{
+        if (!value) callback('Please input your password!')
+        else if (!/^[a-zA-Z0-9]+$/.test(value)) callback('Password must be Lower/Upper case, or number!')
+        else if (value.length < 4 || value.length > 16) callback('Password length must be in range 4-16!')
+        else callback()//no message, callback accepted
     }
-    const passwordChange = (e:ChangeEvent<HTMLInputElement>)=>{
-        setPasswordVal(e.target.value);
-    }
-    const captchaChange = (e:ChangeEvent<HTMLInputElement>)=>{
-        setCaptchaVal(e.target.value);
-    }
-    const gotoLogin = () =>{
-        console.log(usernameVal,passwordVal,captchaVal)
-    }
-    const getCaptchaImg = async ()=>{
-        let captchaAPIRes = await captchaAPI();
-        console.log(captchaAPIRes);
-        if(captchaAPIRes.code===200){
-            // 1、把图片数据显示在img上面
-            setCaptchaImg("data:image/gif;base64,"+captchaAPIRes.img)
-            // 2、本地保存uuid，给登录的时候用
-            localStorage.setItem("uuid",captchaAPIRes.uuid)
-        }
-    }
+    type FieldType = {
+        username?: string;
+        password?: string;
+        remember?: string;
+    };
     return (
         <div className={styles.loginPage}>
             {/*store the background*/}
@@ -52,19 +41,47 @@ const View = () => {
                     <p>Strive Everyday</p>
                 </div>
                 {/*form*/}
-                <div className="form">
-                    <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                        <Input placeholder="User Name" onChange={userNameChange}/>
-                        <Input.Password placeholder="Password" onChange={passwordChange}/>
-                        <div className="captchabox">
-                            <Input placeholder="Type the Text" onClick={getCaptchaImg} onChange={captchaChange}/>
-                            <div className="captchaImg" onClick={getCaptchaImg}>
-                                <img height="38" src={captchaImg} alt="" />
-                            </div>
-                        </div>
-                        <Button type="primary" className="loginbtn" block onClick={gotoLogin}>Login</Button>
-                    </Space>
-                </div>
+                <Form
+                    name="basic"
+                    labelCol={{ span: 8}}
+                    wrapperCol={{ span: 16}}
+                    style={{ maxWidth: 600}}
+                    initialValues={{ remember: true }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off"
+                >
+                    <Form.Item<FieldType>
+                        label="Username"
+                        name="username"
+                        rules={[{validator:validate}]}
+                    >
+                        <Input/>
+                    </Form.Item>
+
+                    <Form.Item<FieldType>
+                        label="Password"
+                        name="password"
+                        rules={[{validator:validate}]}
+                    >
+                        <Input.Password/>
+                    </Form.Item>
+
+                    <Form.Item<FieldType>
+                        name="remember"
+                        valuePropName="checked"
+                        wrapperCol={{ offset: 8, span: 16 }}
+                        style={{color:"white"}}
+                    >
+                        <Checkbox style={{color:"white"}}>Remember me</Checkbox>
+                    </Form.Item>
+
+                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
             </div>
         </div>
     )
