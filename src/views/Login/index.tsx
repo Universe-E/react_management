@@ -3,6 +3,7 @@ import {Button, Input, Checkbox, Form} from "antd";
 import initLoginBg from "./init.ts";
 import styles from "./login.module.scss"
 import "./login.less"
+import {reqLogin} from "@/api";
 
 const View = () => {
     //init background after component mounted
@@ -11,18 +12,25 @@ const View = () => {
         window.onresize = function () {initLoginBg()}
     },[])
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        const {username,password} = values
+        reqLogin(username,password).then(response=>{
+            console.log('Success',response.data)
+        }).catch(error=>{
+            console.log('Failed',error)
+        })
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        // console.log('Failed:', errorInfo);
     };
     //custom validate method
-    const validate = (rule,value,callback)=>{
-        if (!value) callback('Please input your password!')
-        else if (!/^[a-zA-Z0-9]+$/.test(value)) callback('Password must be Lower/Upper case, or number!')
-        else if (value.length < 4 || value.length > 16) callback('Password length must be in range 4-16!')
-        else callback()//no message, callback accepted
+    const validate = (fieldName:string)=>{
+        return (rule,value,callback)=>{
+            if (!value) callback('Please input your '+fieldName+'!')
+            else if (!/^[a-zA-Z0-9]+$/.test(value)) callback(fieldName+' must be Lower/Upper case, or number!')
+            else if (value.length < 4 || value.length > 16) callback(fieldName+' length must be in range 4-16!')
+            else callback()//no message, callback accepted
+        }
     }
     type FieldType = {
         username?: string;
@@ -54,7 +62,7 @@ const View = () => {
                     <Form.Item<FieldType>
                         label="Username"
                         name="username"
-                        rules={[{validator:validate}]}
+                        rules={[{validator:validate("Username")}]}
                     >
                         <Input/>
                     </Form.Item>
@@ -62,7 +70,7 @@ const View = () => {
                     <Form.Item<FieldType>
                         label="Password"
                         name="password"
-                        rules={[{validator:validate}]}
+                        rules={[{validator:validate("Password")}]}
                     >
                         <Input.Password/>
                     </Form.Item>
